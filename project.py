@@ -1,3 +1,7 @@
+import csv
+from IPython.core.display import HTML
+from nvd3 import multiBarChart
+
 def interface():
     '''this function user must take your _input what do you want to know about grahp of accident'''
     print("THE SITUATION OF TRAFFIC ACCIDENT CAUSE OF THE ACCIDENT BY A PERSON AND ENVIRONMENT \
@@ -16,17 +20,12 @@ def interface():
         data = []
         data = [row for row in csv.reader(open("accident_data.csv"))][num:num+1]
         situation = data[0]
-    
-import csv
-from IPython.core.display import HTML
-from nvd3 import multiBarChart
 
 def manage_data():
     """"""
     data = []
     data = [row for row in csv.reader(open("accident_data.csv"))][1:]
     return data
-
 
 def build_all_graph():
     """"""
@@ -42,7 +41,6 @@ def build_all_graph():
                 pass
         chart.add_serie(name= 'THE SITUATION OF TRAFFIC ACCIDENT IN'+str(2005+collum_year), y=ydata, x=xdata)
     return chart
-
 
 def build_conclude_graph():
     """"""
