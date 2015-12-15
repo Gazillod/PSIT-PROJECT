@@ -21,9 +21,15 @@ import csv
 from IPython.core.display import HTML
 from nvd3 import multiBarChart
 
-chart = multiBarChart(width=1024, height=600, x_axis_format=None) # กว่าง * ยาว  = 1024 พิกเซล * 600 พิกเซล
-data = [] # กำหนดให้เก็บข้อมูลเป็นข้อมูลชนิด List
+def manage_data():
+    """"""
+    data = []
+    data = [row for row in csv.reader(open("accident_data.csv"))][1:]
+    return data
 
+
+def build_all_graph():
+    """"""
     chart = multiBarChart(width=2040, height=500, x_axis_format=None)    
     for collum_year in range(1,9):
         xdata, ydata = [], []
@@ -35,6 +41,35 @@ data = [] # กำหนดให้เก็บข้อมูลเป็น�
             else:
                 pass
         chart.add_serie(name= 'THE SITUATION OF TRAFFIC ACCIDENT IN'+str(2005+collum_year), y=ydata, x=xdata)
-chart.add_serie(name="accident", y=ydata, x=xdata)
-chart.buildhtml()
-HTML(chart.htmlcontent)
+    return chart
+
+
+def build_conclude_graph():
+    """"""
+    chart = multiBarChart(width=2040, height=500, x_axis_format=None)    
+    for collum_year in range(1,9):
+        xdata, ydata = [], []
+        for i in manage_data():
+            cause = ((i[0])[0:6])
+            if cause == ' Cause' or cause == ' Other':
+                xdata.append(i[0])
+                ydata.append(int(i[collum_year]))
+            else:
+                pass
+        chart.add_serie(name= 'THE SITUATION OF TRAFFIC ACCIDENT IN'+str(2005+collum_year), y=ydata, x=xdata)
+    return chart
+
+def build_each_graph(situation):
+    """"""
+    chart = multiBarChart(width=2040, height=500, x_axis_format=None)    
+    for collum_year in range(1,9):
+        xdata, ydata = [], []
+        for i in manage_data():
+            cause = ((i[0])[0:len(situation[0])])
+            if cause == situation[0]:
+                xdata.append(i[0])
+                ydata.append(int(i[collum_year]))
+            else:
+                pass
+        chart.add_serie(name= 'THE SITUATION OF TRAFFIC ACCIDENT IN'+str(2005+collum_year), y=ydata, x=xdata)
+    return chart
