@@ -1,19 +1,21 @@
-""""""
 import csv
 from IPython.core.display import HTML
 from nvd3 import multiBarChart
 
+"""The graph of THE SITUATION OF TRAFFIC ACCIDENT CAUSE OF THE ACCIDENT BY A PERSON AND ENVIRONMENT \
+    CAUSES OF THE EQUIPMENT USED IN DRIVING ,WHOLE KINGDOM: 2006 - 2013 Program"""
+
 def manage_data():
-    """"""
+    """This function will take the data from csv file to data list"""
     data = []
     data = [row for row in csv.reader(open("accident_data.csv"))][1:]
     return data
 
-
 def build_all_graph():
-    """"""
-    chart = multiBarChart(width=2040, height=500, x_axis_format=None)    
-    for collum_year in range(1,9):
+    """This function build the chart template and set the histogram graph with data
+    then show about the situation of traffic accident in 2006-2013 and every cause"""
+    chart = multiBarChart(width = 2040, height = 500, x_axis_format = None)    
+    for collum_year in range(1, 9):
         xdata, ydata = [], []
         for i in manage_data():
             cause = ((i[0])[0:6])
@@ -22,14 +24,14 @@ def build_all_graph():
                 ydata.append(int(i[collum_year]))
             else:
                 pass
-        chart.add_serie(name= 'THE SITUATION OF TRAFFIC ACCIDENT IN'+str(2005+collum_year), y=ydata, x=xdata)
+        chart.add_serie(name = 'THE SITUATION OF TRAFFIC ACCIDENT IN (case)' + str(2005 + collum_year), y = ydata, x = xdata)
     return chart
 
-
 def build_conclude_graph():
-    """"""
-    chart = multiBarChart(width=2040, height=500, x_axis_format=None)    
-    for collum_year in range(1,9):
+    """This function build the chart template and set the histogram graph with data
+    then show about the main cause of situation in 2006-2013 """
+    chart = multiBarChart(width = 2040, height = 500, x_axis_format = None)    
+    for collum_year in range(1, 9):
         xdata, ydata = [], []
         for i in manage_data():
             cause = ((i[0])[0:6])
@@ -38,13 +40,15 @@ def build_conclude_graph():
                 ydata.append(int(i[collum_year]))
             else:
                 pass
-        chart.add_serie(name= 'THE SITUATION OF TRAFFIC ACCIDENT IN'+str(2005+collum_year), y=ydata, x=xdata)
+        chart.add_serie(name = 'THE SITUATION OF TRAFFIC ACCIDENT IN (case)' + str(2005 + collum_year), y = ydata, x = xdata)
     return chart
 
 def build_each_graph(situation):
-    """"""
-    chart = multiBarChart(width=2040, height=500, x_axis_format=None)    
-    for collum_year in range(1,9):
+    """This function build the chart template and set the histogram graph with data
+    then show about a cause of the accident that user want to know"""
+
+    chart = multiBarChart(width = 2040, height = 500, x_axis_format = None)    
+    for collum_year in range(1, 9):
         xdata, ydata = [], []
         for i in manage_data():
             cause = ((i[0])[0:len(situation[0])])
@@ -53,7 +57,7 @@ def build_each_graph(situation):
                 ydata.append(int(i[collum_year]))
             else:
                 pass
-        chart.add_serie(name= 'THE SITUATION OF TRAFFIC ACCIDENT IN'+str(2005+collum_year), y=ydata, x=xdata)
+        chart.add_serie(name = 'THE SITUATION OF TRAFFIC ACCIDENT IN (Case)' + str(2005+collum_year), y = ydata, x = xdata)
     return chart
 
 def interface():
@@ -79,10 +83,8 @@ def interface():
         return build_each_graph(situation)
 
 def build_graph(chart):
-    """"""
+    """This function will get return of chart and convert to graph"""
     chart.buildhtml()
     HTML(chart.htmlcontent)
     return HTML(chart.htmlcontent)
 build_graph(interface())
-
-    
